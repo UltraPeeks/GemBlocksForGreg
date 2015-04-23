@@ -1,0 +1,16 @@
+[
+{
+  "modid": "GemBlocksForGreg",
+  "name": "GemBlocksForGreg",
+  "description": "Adds storage blocks for most materials used in GregTech 5.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://forum.industrial-craft.net/index.php?page=Thread&threadID=11276",
+  "updateUrl": "",
+  "authorList": ["UltraPeeks"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
