@@ -14,8 +14,11 @@ public class BasicFuelHandler implements IFuelHandler {
 
 	private ItemStack item;
 	
-	public BasicFuelHandler(ItemStack item) {
+	private int value;
+	
+	public BasicFuelHandler(ItemStack item, int value) {
 		this.item = item;
+		this.value = value;
 	}
 	
 	
@@ -25,7 +28,7 @@ public class BasicFuelHandler implements IFuelHandler {
 			return 0;
 		}
 		if (GT_Utility.areStacksEqual(fuel, item)) {
-			return 300 * 9;
+			return value;
 		}
 		return 0;
 	}
