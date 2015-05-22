@@ -20,11 +20,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 import de.ultrapeeks.gemblocksforgreg.BasicGemBlock.GemType;
 
 @Mod(modid = GemBlocksForGregMod.MODID, name = GemBlocksForGregMod.NAME, version = GemBlocksForGregMod.VERSION, 
-		dependencies = "required-after:gregtech")
+		dependencies = "required-after:gregtech; after:Thaumcraft")
 public class GemBlocksForGregMod {
     public static final String MODID = "GemBlocksForGreg";
     public static final String NAME = "GemBlocksForGreg";
-    public static final String VERSION = "1.4a";
+    public static final String VERSION = "1.4.1";
     
     @Instance(value = MODID)
     public static GemBlocksForGregMod instance;
@@ -57,6 +57,13 @@ public class GemBlocksForGregMod {
         			new ItemStack(block), "xxx", "xxx", "xxx", Character.valueOf('x'), type.getGemOreName()));
     	}
     	
+    	// Thaumcraft:blockCosmeticSolid:4
+    	Block thaumBlock = GameRegistry.findBlock("Thaumcraft", "blockCosmeticSolid");
+    	if (thaumBlock != null) {
+	    	ItemStack thaumiumBlock = new ItemStack(thaumBlock, 1, 4);
+	    	OreDictionary.registerOre("blockThaumium", thaumiumBlock);
+    	}
+    	
     	Block block = null;
     	for (int i = 0; i < MetalType.values().length; i++) {
     		MetalType type = MetalType.values()[i];
@@ -66,20 +73,21 @@ public class GemBlocksForGregMod {
     		}
     		
     		ItemStack stack = new ItemStack(block, 1, i % 16);
-    		for(String oreName: type.getOreNames()) {
-        		OreDictionary.registerOre(oreName, stack.copy());
-        	}
-
-    		GameRegistry.addRecipe(new ShapedOreRecipe(
-        			stack.copy(), "xxx", "xxx", "xxx", Character.valueOf('x'), type.getIngotOreName()));
     		
+    		if (type != MetalType.THAUMIUM || thaumBlock == null) {
+				for(String oreName: type.getOreNames()) {
+	        		OreDictionary.registerOre(oreName, stack.copy());
+	        	}
+	    		GameRegistry.addRecipe(new ShapedOreRecipe(
+	        			stack.copy(), "xxx", "xxx", "xxx", Character.valueOf('x'), type.getIngotOreName()));
+	    	}
     		if (type == MetalType.LIGNITE) {
     			GameRegistry.registerFuelHandler(new BasicFuelHandler(stack.copy()));
     		}
+
     		
     	}
-    	
-    	
+   	
     	
     	if (change) {
 	    	Materials.Uraninite.mOreByProducts.set(2, Materials.Uranium235);
